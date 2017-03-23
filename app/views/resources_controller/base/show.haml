@@ -1,0 +1,6 @@
+%h1= @resource.try_all(:human, :title, :name, :to_s)
+
+= resource_table(resource: @resource) do |t|
+  = render 'show', table: t
+  
+= render 'show_actions', resource: @resource

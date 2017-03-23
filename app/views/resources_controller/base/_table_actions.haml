@@ -1,0 +1,8 @@
+= table.column :actions do |resource|
+  - capture_haml do
+    = bootstrap_button(to: resource_path(resource), context: :primary, size: :small) do
+      = t('.show')
+    = bootstrap_button(to: edit_resource_path(resource), context: :secondary, size: :small) do
+      = t('.edit')
+    = bootstrap_button(to: resource_path(resource), context: :danger, size: :small, method: :delete, data: { confirm: 'Are you sure?' }) do
+      = t('.delete')

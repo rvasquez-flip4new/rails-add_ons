@@ -1,0 +1,3 @@
+= form.button :submit, class: 'btn btn-success'
+= bootstrap_button(to: ((action_name == 'new' || form.object.new_record?) ? collection_path : resource_path(form.object)), context: :link) do
+  = t('.cancel')

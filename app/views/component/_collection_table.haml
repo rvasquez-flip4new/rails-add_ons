@@ -1,0 +1,13 @@
+%table.table
+  %thead
+    %tr
+      - columns.each do |name, options|
+        %td= name
+  %tbody
+    - collection.each do |resource|
+      %tr
+        - columns.each do |name, options|
+          - if options[:block].present?
+            %td= options[:block].call(resource)
+          - else
+            %td= resource.send(name)

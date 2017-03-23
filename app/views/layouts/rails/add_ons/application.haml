@@ -1,0 +1,18 @@
+!!!
+%html{:lang => "en"}
+  %head
+    = csrf_meta_tags
+
+    / Required meta tags
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    / Bootstrap CSS
+    %link{:crossorigin => "anonymous", :href => "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css", :integrity => "sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ", :rel => "stylesheet"}/
+    = stylesheet_link_tag    "rails/add_ons/application",  media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag "rails/add_ons/application", 'data-turbolinks-track': 'reload'
+  %body
+    = render 'navbar'
+    .container
+      .starter-template
+        = yield
+    / /.container

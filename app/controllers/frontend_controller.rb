@@ -1,0 +1,2 @@
+class FrontendController < ::FrontendController
+end
