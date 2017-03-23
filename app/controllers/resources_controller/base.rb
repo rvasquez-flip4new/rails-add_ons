@@ -7,11 +7,18 @@ module ResourcesController
 
       included do
         respond_to :html, :flash
-
-        before_action :load_collection, only: [:index]
-        before_action :load_resource, only: [:show, :edit]
-        before_action :initialize_resource, only: [:new]
-        before_action :initialize_resource_for_create, only: [:create]
+        
+        if respond_to?(:before_action)
+          before_action :load_collection, only: [:index]
+          before_action :load_resource, only: [:show, :edit]
+          before_action :initialize_resource, only: [:new]
+          before_action :initialize_resource_for_create, only: [:create]
+        else
+          before_filter :load_collection, only: [:index]
+          before_filter :load_resource, only: [:show, :edit]
+          before_filter :initialize_resource, only: [:new]
+          before_filter :initialize_resource_for_create, only: [:create]
+        end
       end
 
       def index; end
