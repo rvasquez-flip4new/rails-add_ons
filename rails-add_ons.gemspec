@@ -24,5 +24,4 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   # s.add_dependency "responders"
   s.add_dependency "rails-i18n"
-  s.add_dependency "resource_renderer"
 end
