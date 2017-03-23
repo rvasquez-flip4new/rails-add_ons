@@ -1,4 +1,4 @@
-require 'slim-rails'
+require 'haml-rails'
 require 'font-awesome-rails'
 require 'twitter_bootstrap_components_rails'
 require 'simple_form'

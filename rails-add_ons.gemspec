@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "sqlite3"
   
-  s.add_dependency "slim-rails"
+  s.add_dependency "haml-rails"
   s.add_dependency "font-awesome-rails"
   s.add_dependency "simple_form"
   s.add_dependency "responders"
