@@ -14,6 +14,10 @@ module Component
 
     private
 
+    def table
+      self
+    end
+
     def view_locals
       {
         columns:        @columns,
