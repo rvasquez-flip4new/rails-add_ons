@@ -12,6 +12,16 @@ module Component
       @columns[name] = options
     end
 
+    def timestamps
+      column(:created_at)
+      column(:updated_at)
+    end
+
+    def association(name, options = {}, &block)
+      options.reverse_merge!(block: block) if block_given?
+      @columns[name] = options
+    end
+
     private
 
     def table

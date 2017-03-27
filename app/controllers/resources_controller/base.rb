@@ -6,7 +6,8 @@ module ResourcesController
       extend ActiveSupport::Concern
 
       included do
-        respond_to :html, :flash
+        respond_to :html
+        responders :flash
         
         if respond_to?(:before_action)
           before_action :load_collection, only: [:index]
@@ -28,10 +29,14 @@ module ResourcesController
       
       def create
         @resource.save
-        respond_with @resource, location: -> { resource_path(@resource) }
+        respond_with @resource, flash_now: false, location: after_create_location.call(self)
       end
 
       private
+
+      def after_create_location
+        ->(controller) { resource_path(@resource) }
+      end
 
       def load_collection
         @collection = resource_class.all
@@ -112,9 +117,32 @@ module ResourcesController
       end
     end
 
+    module LocationHistory
+      extend ActiveSupport::Concern
+
+      included do
+        before_action :store_location
+      end
+
+      private
+
+      def store_location
+        session[:history][Time.zone.now] = request.referer
+      end
+
+      def location_history
+        session[:history] ||= {}
+      end
+
+      def last_location
+        location_history.sort.first.try(:last)
+      end
+    end
+
     include RestActions
     include Resources
     include RestResourceUrls
     include ResourceInflections
+    include LocationHistory
   end
 end
