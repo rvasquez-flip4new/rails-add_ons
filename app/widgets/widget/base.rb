@@ -1,7 +1,7 @@
 module Widget
   class Base
     def self.default_action
-      :view
+      :show
     end
 
     def initialize(view_context, options = {}, &block)
@@ -14,7 +14,6 @@ module Widget
     def render(action = nil)
       action ||= self.class.default_action
       send(action)
-      # raise view_locals.inspect
       @view_context.render(partial_path(action), view_locals)
     end
 
