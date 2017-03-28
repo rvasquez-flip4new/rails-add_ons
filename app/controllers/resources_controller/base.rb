@@ -127,15 +127,21 @@ module ResourcesController
       private
 
       def store_location
-        session[:history][Time.zone.now] = request.referer
+        truncate_location_history(9)
+        location_history[Time.zone.now] = request.referer
       end
 
       def location_history
-        session[:history] ||= {}
+        session[:location_history] ||= {}
       end
 
       def last_location
-        location_history.sort.first.try(:last)
+        location_history.sort.last.try(:last)
+      end
+
+      def truncate_location_history(count = 0)
+        return if location_history.size <= count
+        session[:location_history] = session[:location_history].sort.last(count).to_h
       end
     end
 
