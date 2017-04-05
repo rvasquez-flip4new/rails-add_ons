@@ -121,7 +121,11 @@ module ResourcesController
       extend ActiveSupport::Concern
 
       included do
-        before_action :store_location
+        if respond_to?(:before_action)
+          before_action :store_location
+        else
+          before_filter :store_location
+        end
       end
 
       private
