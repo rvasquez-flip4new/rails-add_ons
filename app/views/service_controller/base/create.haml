@@ -1,0 +1,10 @@
+%table.table.table-sm.table-striped
+  %tbody
+    - @response.messages.each_with_index do |message, index|
+      %tr
+        %td= index + 1
+        %td= message
+
+= bootstrap_button(to: new_resource_path, context: :success) do
+  = fa_icon :back
+  = t('.back')
