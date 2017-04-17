@@ -1,0 +1,1 @@
+//= require rails/add_ons/application
