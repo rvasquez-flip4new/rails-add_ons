@@ -6,10 +6,8 @@
       = fa_icon(:plus)
       = t('.new')
 
-
-
 = collection_table(collection: @collection) do |t|
   = render 'table',         table: t
   = render 'table_actions', table: t
 
-= render 'pagination' if paginate?
+= render 'pagination' if respond_to?(:paginate?) && paginate?
