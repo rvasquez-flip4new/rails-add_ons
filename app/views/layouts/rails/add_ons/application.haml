@@ -11,7 +11,8 @@
     = stylesheet_link_tag    "rails/add_ons/application",  media: 'all', :'data-turbolinks-track' => 'reload'
     = javascript_include_tag "rails/add_ons/application", :'data-turbolinks-track' => 'reload'
     / widget endpoint
-    %meta{name: 'widget-base-path', content: rails_add_ons.widget_path}
+    - if respond_to?(:rails_add_ons)
+      %meta{name: 'widget-base-path', content: rails_add_ons.widget_path}
   %body
     = render 'navbar'
     .container-fluid
