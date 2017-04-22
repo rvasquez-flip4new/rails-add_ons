@@ -32,7 +32,7 @@ module Widget
       action ||= self.class.default_action
       send(action)
       output = ""
-      output << @view_context.content_tag(:div, class: widget_classes, id: dom_id, 'data-widget': widget_name, 'data-widgetaction': action, 'data-container': container_dom_id) do
+      output << @view_context.content_tag(:div, class: widget_classes, id: dom_id, :'data-widget' => widget_name, :'data-widgetaction' => action, :'data-container' => container_dom_id) do
         @view_context.render(partial: '/widget/base/widget_controls', formats: [:html], locals: { dom_id: dom_id}) +
         @view_context.render(partial: partial_path(action), formats: [:html], locals: view_locals) unless @remote
       end
