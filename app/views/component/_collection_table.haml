@@ -2,7 +2,10 @@
   %thead
     %tr
       - columns.each do |name, options|
-        %td= name
+        - if resource_class.respond_to?(:human_attribute_name)
+          %td= resource_class.human_attribute_name(name)
+        - else
+          %td= name
   %tbody
     - collection.each do |resource|
       %tr
