@@ -87,7 +87,7 @@ module ServiceController
 
       def inflections
         {
-          resource_name: service_class.model_name.human(count: 1)
+          service_name: service_class.model_name.human
         }
       end
     end

@@ -8,3 +8,15 @@ de:
       destroy:
         notice: "%{resource_name} wurde gelöscht."
         alert: "%{resource_name} konnte nicht gelöscht werden."
+  resources_controller:
+    base:
+      form_buttons:
+        cancel: "Abbrechen"
+      index:
+        new: "Erstellen"
+      new:
+        title: "%{resource_name} erstellen"
+  service_controller:
+    base:
+      new:
+        title: "%{service_name} ausführen"

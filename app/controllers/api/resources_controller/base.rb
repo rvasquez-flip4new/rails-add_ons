@@ -22,18 +22,20 @@ module Api
 
         def index
           respond_to do |format|
-            format.json { render json: @collection }
+            format.json { render json: serialize_collection(@collection) }
           end
         end
 
         def show
-          respond_with(@resource)
+          respond_to do |format|
+            format.json { render json: serialize_resource(@resource), status: :ok }
+          end
         end
 
         def create
           respond_to do |format|
             if @resource.save
-              format.json { render json: @resource, status: :created }
+              format.json { render json: serialize_resource(@resource), status: :created }
             else
               format.json { render json: { errors: @resource.errors.full_messages }, status: 422 }
             end
@@ -43,7 +45,7 @@ module Api
         def update
           respond_to do |format|
             if @resource.update_attributes(permitted_params)
-              format.json { render json: @resource }
+              format.json { render json: serialize_resource(@resource) }
             else
               format.json { render json: { errors: @resource.errors.full_messages }, status: 422 }
             end
@@ -53,7 +55,7 @@ module Api
         def destroy
           @resource.destroy
           respond_to do |format|
-            format.json { render json: @resource }
+            format.json { render json: serialize_resource(@resource) }
           end
         end
 
@@ -91,10 +93,6 @@ module Api
       module RestResourceUrls
         extend ActiveSupport::Concern
 
-        included do
-          helper_method :resource_path
-        end
-
         private
 
         def resource_url(resource)
@@ -102,9 +100,22 @@ module Api
         end
       end
 
+      module Serialization
+        private
+
+        def serialize_collection(collection)
+          collection
+        end
+
+        def serialize_resource(resource)
+          resource
+        end
+      end
+
       include RestActions
       include Resources
       include RestResourceUrls
+      include Serialization
     end
   end
 end
