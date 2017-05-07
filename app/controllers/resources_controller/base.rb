@@ -6,9 +6,10 @@ module ResourcesController
       extend ActiveSupport::Concern
 
       included do
-        respond_to :html
+        include ActionController::MimeResponds
+
         responders :flash
-        
+
         if respond_to?(:before_action)
           before_action :load_collection, only: [:index]
           before_action :load_resource, only: [:show, :edit]
@@ -26,7 +27,7 @@ module ResourcesController
       def new; end
       def show; end
       def edit; end
-      
+
       def create
         @resource.save
         respond_with @resource, flash_now: false, location: after_create_location.call(self)
@@ -61,7 +62,7 @@ module ResourcesController
 
     module Resources
       extend ActiveSupport::Concern
-      
+
       included do
         helper_method :resource_class
       end

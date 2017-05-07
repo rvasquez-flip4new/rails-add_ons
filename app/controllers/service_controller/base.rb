@@ -6,6 +6,8 @@ module ServiceController
       extend ActiveSupport::Concern
 
       included do
+        include ActionController::MimeResponds
+        
         respond_to :html
         responders :flash
         
