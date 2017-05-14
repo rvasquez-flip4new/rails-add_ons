@@ -1,8 +1,6 @@
 module ResourcesController::Pagination
-  extend ActiveSupport::Concern
-
-  included do
-    helper_method :paginate?
+  def self.included(base)
+    base.helper_method :paginate?
   end
 
   def paginate?
@@ -12,6 +10,6 @@ module ResourcesController::Pagination
   private
 
   def load_collection
-    @collection = resource_class.page params[:page]
+    @collection = load_collection_scope.page(params[:page])
   end
 end

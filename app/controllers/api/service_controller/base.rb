@@ -22,7 +22,7 @@ module Api
             if @result.success?
               format.json { render json: serialize_result(@result), status: :created }
             else
-              format.json { render json: { errors: @result.errors.full_messages }, status: 422 }
+              format.json { render json: { errors: serialize_errors(@result.errors) }, status: 422 }
             end
           end
         end
@@ -56,13 +56,18 @@ module Api
         private
 
         def serialize_result(result)
-          result.to_json
+          result.as_json
+        end
+
+        def serialize_errors(errors)
+          errors
         end
       end
 
       include RestActions
       include Service
       include Serialization
+      include ApiControllerConcerns::ExceptionHandling
     end
   end
 end

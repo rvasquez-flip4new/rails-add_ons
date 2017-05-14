@@ -8,16 +8,17 @@ module ResourcesController
       included do
         include ActionController::MimeResponds
 
+        respond_to :html
         responders :flash
 
         if respond_to?(:before_action)
           before_action :load_collection, only: [:index]
-          before_action :load_resource, only: [:show, :edit]
+          before_action :load_resource, only: [:show, :edit, :destroy, :update]
           before_action :initialize_resource, only: [:new]
           before_action :initialize_resource_for_create, only: [:create]
         else
           before_filter :load_collection, only: [:index]
-          before_filter :load_resource, only: [:show, :edit]
+          before_filter :load_resource, only: [:show, :edit, :destroy, :update]
           before_filter :initialize_resource, only: [:new]
           before_filter :initialize_resource_for_create, only: [:create]
         end
@@ -28,9 +29,19 @@ module ResourcesController
       def show; end
       def edit; end
 
+      def update
+        @resource.update(permitted_params)
+        respond_with @resource
+      end
+
+      def destroy
+        @resource.destroy
+        respond_with @resource
+      end
+
       def create
         @resource.save
-        respond_with @resource, flash_now: false, location: after_create_location.call(self)
+        respond_with @resource
       end
 
       private
@@ -39,12 +50,18 @@ module ResourcesController
         ->(controller) { resource_path(@resource) }
       end
 
+      def load_collection_scope
+        resource_class
+      end
       def load_collection
-        @collection = resource_class.all
+        @collection = load_collection_scope.all
       end
 
+      def load_resource_scope
+        resource_class
+      end
       def load_resource
-        @resource = resource_class.find(params[:id])
+        @resource = load_resource_scope.find(params[:id])
       end
 
       def initialize_resource

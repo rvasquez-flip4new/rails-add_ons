@@ -1,4 +1,11 @@
 de:
+  classes:
+    i18n: Sprache
+  component:
+    collection_table:
+      delete: Löschen
+      edit: Bearbeiten
+      show: Anzeigen
   flash:
     actions:
       create:
@@ -8,15 +15,25 @@ de:
       destroy:
         notice: "%{resource_name} wurde gelöscht."
         alert: "%{resource_name} konnte nicht gelöscht werden."
+  i18n:
+    locales:
+      en: English
   resources_controller:
     base:
       form_buttons:
         cancel: "Abbrechen"
+      edit:
+        title: "%{resource_name} bearbeiten"
       index:
         new: "Erstellen"
       new:
         title: "%{resource_name} erstellen"
+      show_actions:
+        back: "Zurück"
+        edit: "Bearbeiten"
   service_controller:
     base:
+      create:
+        back: "Zurück"
       new:
         title: "%{service_name} ausführen"

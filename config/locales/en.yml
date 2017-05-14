@@ -1,4 +1,11 @@
 en:
+  classes:
+    i18n: Language
+  component:
+    collection_table:
+      delete: Delete
+      edit: Edit
+      show: Show
   flash:
     actions:
       create:
@@ -8,3 +15,25 @@ en:
       destroy:
         notice: "%{resource_name} was successfully destroyed."
         alert: "%{resource_name} could not be destroyed."
+  i18n:
+    locales:
+      de: Deutsch
+  resources_controller:
+    base:
+      form_buttons:
+        cancel: "Cancel"
+      edit:
+        title: "Edit %{resource_name}"
+      index:
+        new: "New"
+      new:
+        title: "New %{resource_name}"
+      show_actions:
+        back: "Back"
+        edit: "Edit"
+  service_controller:
+    base:
+      create:
+        back: "Back"
+      new:
+        title: "Run %{service_name}"

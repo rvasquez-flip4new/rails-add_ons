@@ -18,10 +18,14 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", ">= 3.2"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "guard-rspec"
+  s.add_development_dependency "guard-bundler"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "twitter-bootstrap-components-rails"
+  s.add_development_dependency "responders"
   
   s.add_dependency "haml-rails"
   s.add_dependency "font-awesome-rails"
   s.add_dependency "simple_form"
-  # s.add_dependency "responders"
   s.add_dependency "rails-i18n"
 end

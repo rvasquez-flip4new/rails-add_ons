@@ -12,3 +12,5 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+gem 'rails',     '~> 3.2'
+gem 'test-unit', '~> 3.0'

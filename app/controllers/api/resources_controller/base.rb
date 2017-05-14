@@ -16,7 +16,6 @@ module Api
             before_action :initialize_resource_for_create, only: [:create]
           else
             before_filter :load_collection, only: [:index]
-            before_filter :load_collection, only: [:index]
             before_filter :load_resource_for_show, only: [:show]
             before_filter :load_resource, only: [:update, :destroy, :delete]
             before_filter :initialize_resource_for_create, only: [:create]
@@ -118,31 +117,14 @@ module Api
               scope = scope.offset(condition)
             when 'order'
               scope = scope.order(condition)
+            when 'includes'
+              scope = scope.includes(condition.to_sym)
             else
-              operator = extract_operator(condition.first[0])
-              scope = scope.where("#{field} #{operator} ?", condition.first[1])
+              condition_statement = ::Api::ResourcesController::ConditionParser.new(field, condition).condition_statement
+              scope = scope.where(condition_statement)
             end
           end
           scope
-        end
-
-        def extract_operator(operator)
-          case operator
-          when 'gt'
-            ">"
-          when 'gt_or_eq'
-            ">="
-          when 'eq'
-            "is"
-          when 'not_eq'
-            "is not"
-          when 'lt_or_eq'
-            "<="
-          when 'lt'
-            "<"
-          else
-            raise "Unknown operator #{operator}"
-          end
         end
       end
 
@@ -192,7 +174,11 @@ module Api
         extend ActiveSupport::Concern
 
         included do
-          before_action :load_count, only: [:count]
+          if respond_to?(:before_action)
+            before_action :load_count, only: [:count]
+          else
+            before_filter :load_count, only: [:count]
+          end
         end
 
         def count
@@ -212,7 +198,11 @@ module Api
         extend ActiveSupport::Concern
 
         included do
-          before_action :load_and_destroy_collection, only: [:destroy_all]
+          if respond_to?(:before_action)
+            before_action :load_and_destroy_collection, only: [:destroy_all]
+          else
+            before_filter :load_and_destroy_collection, only: [:destroy_all]
+          end
         end
 
         def destroy_all
@@ -228,36 +218,13 @@ module Api
         end
       end
 
-      module ExceptionHandling
-        extend ActiveSupport::Concern
-
-        included do
-          rescue_from Exception do |exception|
-            if Rails.env.development? || Rails.env.test?
-              error = { message: exception.message }
-
-              error[:application_trace] = Rails.backtrace_cleaner.clean(exception.backtrace)
-              error[:full_trace] = exception.backtrace 
-
-              respond_to do |format|
-                format.json { render json: error, status: 500 }
-              end
-            else
-              respond_to do |format|
-                format.json { render json: { error: 'Internal server error.' }, status: 500 }
-              end
-            end
-          end
-        end
-      end
-
       include RestActions
       include Resources
       include RestResourceUrls
       include Serialization
       include CountAction
       include DestroyAllAction
-      include ExceptionHandling
+      include ApiControllerConcerns::ExceptionHandling
     end
   end
 end

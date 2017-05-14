@@ -2,10 +2,14 @@
   %thead
     %tr
       - columns.each do |name, options|
-        - if resource_class.respond_to?(:human_attribute_name)
-          %td= resource_class.human_attribute_name(name)
+        - title = if resource_class.respond_to?(:human_attribute_name)
+          - resource_class.human_attribute_name(name)
         - else
-          %td= name
+          - name
+        - if options.has_key?(:sort)
+          %td= sort_link(name, title, options[:sort])
+        - else
+          %td= title
   %tbody
     - collection.each do |resource|
       %tr
