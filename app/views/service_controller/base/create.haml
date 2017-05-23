@@ -1,6 +1,6 @@
 = render 'create_before_service_output', response: @response
 
-%table.table.table-sm.table-striped
+%table.table.table-sm.table-striped.table-monospaced
   %tbody
     - @response.messages.each_with_index do |message, index|
       %tr

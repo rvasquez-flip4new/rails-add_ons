@@ -30,7 +30,11 @@ module ResourcesController
       def edit; end
 
       def update
-        @resource.update(permitted_params)
+        if Rails::VERSION::MAJOR < 4
+          @resource.update_attributes(permitted_params)
+        else
+          @resource.update(permitted_params)
+        end
         respond_with @resource
       end
 
