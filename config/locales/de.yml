@@ -15,6 +15,9 @@ de:
       destroy:
         notice: "%{resource_name} wurde gelöscht."
         alert: "%{resource_name} konnte nicht gelöscht werden."
+      perform:
+        notice: "%{resource_name} wurde ausgeführt."
+        alert: "%{resource_name} konnte nicht ausgeführt werden. Es traten folgende Fehler auf: %{errors}"
   i18n:
     locales:
       en: English

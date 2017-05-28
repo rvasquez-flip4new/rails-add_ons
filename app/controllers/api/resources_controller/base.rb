@@ -112,9 +112,9 @@ module Api
           request.query_parameters.each do |field, condition|
             case field
             when 'limit'
-              scope = scope.limit(condition)
+              scope = scope.limit(condition.to_i)
             when 'offset'
-              scope = scope.offset(condition)
+              scope = scope.offset(condition.to_i)
             when 'order'
               scope = scope.order(condition)
             when 'includes'
@@ -190,7 +190,9 @@ module Api
         private
 
         def load_count
-          @count = resource_class.count
+          base_scope = resource_class
+          scope = add_conditions_from_query(base_scope)
+          @count = scope.count
         end
       end
 
@@ -241,6 +243,59 @@ module Api
           @count = resource_class.delete_all
         end
       end
+
+      module FirstAction
+        extend ActiveSupport::Concern
+
+        included do
+          if respond_to?(:before_action)
+            before_action :load_first, only: [:first]
+          else
+            before_filter :load_first, only: [:first]
+          end
+        end
+
+        def first
+          respond_to do |format|
+            format.json { render json: [serialize_resource(@resource)] }
+          end
+        end
+
+        private
+
+        def load_first
+          base_scope = resource_class
+          scope = add_conditions_from_query(base_scope)
+          @resource = scope.first
+        end
+      end
+
+      module LastAction
+        extend ActiveSupport::Concern
+
+        included do
+          if respond_to?(:before_action)
+            before_action :load_last, only: [:last]
+          else
+            before_filter :load_last, only: [:last]
+          end
+        end
+
+        def last
+          respond_to do |format|
+            format.json { render json: [serialize_resource(@resource)] }
+          end
+        end
+
+        private
+
+        def load_last
+          base_scope = resource_class
+          scope = add_conditions_from_query(base_scope)
+          @resource = scope.last
+        end
+      end
+
       include RestActions
       include Resources
       include RestResourceUrls
@@ -248,6 +303,8 @@ module Api
       include CountAction
       include DestroyAllAction
       include DeleteAllAction
+      include FirstAction
+      include LastAction
       include ApiControllerConcerns::ExceptionHandling
     end
   end

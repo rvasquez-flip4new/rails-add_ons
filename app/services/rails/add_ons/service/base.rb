@@ -3,6 +3,7 @@ module Rails
     module Service
       class Base
         include ActiveModel::Model
+        extend ActiveModel::Naming
 
         def self.attr_accessor(*args)
           super
@@ -17,10 +18,6 @@ module Rails
 
         def self.attribute_names
           (@attr_names ||= [])
-        end
-
-        def self.i18n_scope
-          :activerecord
         end
 
         def self.call(*args)

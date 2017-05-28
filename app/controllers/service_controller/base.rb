@@ -24,15 +24,19 @@ module ServiceController
       def new; end
       
       def create
-        @response = @resource.perform
-        if @response.success?
+        perform
+      end
+
+      private
+
+      def perform
+        @result = @resource.perform
+        if @result.success?
           render :create
         else
           render :new
         end
       end
-
-      private
 
       def initialize_service
         @resource = service_class.new
