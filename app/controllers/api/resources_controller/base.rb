@@ -257,7 +257,11 @@ module Api
 
         def first
           respond_to do |format|
-            format.json { render json: [serialize_resource(@resource)] }
++            if @resource.nil?
++              format.json { render json: nil }
++            else
++              format.json { render json: [serialize_resource(@resource)] }
++            end
           end
         end
 
@@ -283,7 +287,11 @@ module Api
 
         def last
           respond_to do |format|
-            format.json { render json: [serialize_resource(@resource)] }
++            if @resource.nil?
++              format.json { render json: nil }
++            else
++              format.json { render json: [serialize_resource(@resource)] }
++            end
           end
         end
 
