@@ -15,6 +15,9 @@ en:
       destroy:
         notice: "%{resource_name} was successfully destroyed."
         alert: "%{resource_name} could not be destroyed."
+      perform:
+        notice: "%{resource_name} was executed."
+        alert: "%{resource_name} could not be executed. Errors: %{errors}"
   i18n:
     locales:
       de: Deutsch
@@ -37,3 +40,7 @@ en:
         back: "Back"
       new:
         title: "Run %{service_name}"
+  views:
+    pagination:
+      last: '&#9654;'
+      next: '&#9664;'

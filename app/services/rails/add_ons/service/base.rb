@@ -146,7 +146,7 @@ module Rails
         include Errors
         include Resultable
         include Callbacks
-        include Messages
+        include Rails::AddOns::Service::Messages
       end
     end
   end

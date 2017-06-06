@@ -40,3 +40,7 @@ de:
         back: "Zurück"
       new:
         title: "%{service_name} ausführen"
+  views:
+    pagination:
+      last: '&#9654;'
+      next: '&#9664;'

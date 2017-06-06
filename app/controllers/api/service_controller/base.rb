@@ -8,7 +8,7 @@ module Api
           include ActionController::MimeResponds
 
           respond_to :json
-          
+
           if respond_to?(:before_action)
             before_action :initialize_service_for_create, only: [:create]
           else
@@ -17,6 +17,12 @@ module Api
         end
 
         def create
+          perform
+        end
+
+        private
+
+        def perform
           @result = @service.perform
           respond_to do |format|
             if @result.success?
@@ -27,16 +33,17 @@ module Api
           end
         end
 
-        private
-
         def initialize_service_for_create
+          @service = service_class.new(*service_arguments)
+        end
+
+        def service_arguments
           # In rails 5 permitted_params is an instance of ActionController::Parameters.
           # Stragely, when calling #delete on it, it does not delete the key, so we have
-          # to transform it into a hash first. 
+          # to transform it into a hash first.
           params_hash = permitted_params.try(:to_h).presence || permitted_params
-          
           options = params_hash.try(:delete, :options) || {}
-          @service = service_class.new(params_hash, options)
+          [params_hash, options]
         end
 
         def permitted_params
