@@ -52,7 +52,7 @@ module Api
       end
 
       def extract_column_and_operator(string)
-        if string =~ /([a-z_]{1,})\(([a-z_]{2,})\)/
+        if string =~ /([\.a-z_]{1,})\(([a-z_]{2,})\)/
           return $~[1], $~[2]
         end 
       end
