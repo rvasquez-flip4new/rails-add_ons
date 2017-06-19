@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails-add_ons (0.1.0)
+    rails-add_ons (0.2.0)
       font-awesome-rails
       haml-rails
       rails (>= 3.2)
