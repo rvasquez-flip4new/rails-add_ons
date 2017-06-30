@@ -32,6 +32,7 @@ module ServiceController
       def perform
         @result = @resource.perform
         if @result.success?
+          flash.now[:success] = t('flash.actions.perform.notice', resource_name: @resource.class.model_name.human)
           render :create
         else
           render :new
