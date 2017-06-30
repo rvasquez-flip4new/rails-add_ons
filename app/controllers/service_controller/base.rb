@@ -44,7 +44,15 @@ module ServiceController
       end
 
       def initialize_service_for_create
-        @resource = service_class.new(permitted_params)
+        @resource = service_class.new(hashified_params)
+      end
+
+      def hashified_params
+        if permitted_params.respond_to?(:to_h)
+          permitted_params.to_h
+        else
+          permitted_params
+        end
       end
 
       def permitted_params
