@@ -33,6 +33,7 @@ en:
         title: "New %{resource_name}"
       show_actions:
         back: "Back"
+        delete: "Delete"
         edit: "Edit"
   service_controller:
     base:
