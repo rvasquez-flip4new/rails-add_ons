@@ -314,6 +314,26 @@ module Api
       include FirstAction
       include LastAction
       include ApiControllerConcerns::ExceptionHandling
+
+      if ActionController.const_defined?('Parameters')
+        class PatchedParameters < ActionController::Parameters
+          def require key
+            begin
+              super key
+            rescue ActionController::ParameterMissing => e
+              if self[key].nil? || self[key].empty?
+                return PatchedParameters.new
+              else
+                raise e
+              end
+            end
+          end
+        end
+
+        def params
+          @_params ||= PatchedParameters.new(request.parameters)
+        end
+      end
     end
   end
 end
