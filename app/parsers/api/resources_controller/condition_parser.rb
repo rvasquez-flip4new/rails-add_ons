@@ -11,7 +11,6 @@ module Api
       }
 
       def initialize(field, condition)
-        # @condition = { field => condition }
         @field, @condition = field, condition
       end
 
@@ -54,7 +53,7 @@ module Api
       def extract_column_and_operator(string)
         if string =~ /([\.a-z_]{1,})\(([a-z_]{2,})\)/
           return $~[1], $~[2]
-        end 
+        end
       end
 
       def operator_map
