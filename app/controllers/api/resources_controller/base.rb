@@ -118,7 +118,7 @@ module Api
             when 'order'
               scope = scope.order(condition)
             when 'includes'
-              scope = scope.includes(condition.to_sym)
+              scope = scope.includes(condition.map(&:to_sym))
             else
               condition_statement = ::Api::ResourcesController::ConditionParser.new(field, condition).condition_statement
               scope = scope.where(condition_statement)
